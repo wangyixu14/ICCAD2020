@@ -58,8 +58,8 @@ model_2 = Actor(state_size=2, action_size=1, seed=0, fc1_units=25).to(device)
 model_2.load_state_dict(torch.load("actor_2900.pth"))
 model_2.eval()
 
-invariant_1 = io.loadmat('inv_os2800.mat')['V1']
-invariant_2 = io.loadmat('inv_os2900.mat')['V']
+# invariant_1 = io.loadmat('inv_os2800.mat')['V1']
+# invariant_2 = io.loadmat('inv_os2900.mat')['V']
 # 150 * 150 size
 # def where_inv(state):	 
 # 	x_loc = state[0]
