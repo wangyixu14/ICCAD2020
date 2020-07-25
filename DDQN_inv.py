@@ -241,7 +241,7 @@ def test(model_name, state_list=None, renew=False, mode='switch'):
 			if mode == 'switch':
 				flag = where_inv(state.cpu().numpy())
 				action = model.act(state, epsilon=0)
-				# action, _ = find_feasible(flag, action)
+				action, _ = find_feasible(flag, action)
 				with torch.no_grad():
 					if action == 0:
 						control_action = model_1(state).cpu().data.numpy()[0]
@@ -283,8 +283,8 @@ if __name__ == '__main__':
 	# assert False
 	# train()
 	# assert False
-	# sw_state = np.load('init_state_500.npy')
-	sw_reward, sw_fuel, sw_state  = test('./ddqn_models/inv/ddqn_200_1.0_good.pth', state_list=None, renew=True, mode='switch')
+	sw_state = np.load('init_state_500.npy')
+	sw_reward, sw_fuel, sw_state  = test('./ddqn_models/inv/ddqn_200_1.0_good.pth', state_list=sw_state, renew=False, mode='switch')
 	print('d1')
 	d1_reward, d1_fuel, _ = test(model_name=None, state_list=sw_state, renew=False, mode='d1')
 	ran_reward, ran_fuel, _ = test(model_name=None, state_list=sw_state, renew=False, mode='random')
