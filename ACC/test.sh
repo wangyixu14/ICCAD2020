@@ -1,0 +1,1 @@
+python DDQN_inv.py -weight 1
