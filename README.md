@@ -4,8 +4,10 @@ This repository contains the code for our paper(https://iccad.com/iccad_2020_acc
 Vitual environment is suggested to run the code. 
 ```python
 conda create -n cad20 python=3.7
+conda activate cad20
+pip install -r requirements.txt
 ```
-install pytorch (https://pytorch.org/) and other used package through pip or conda install. 
+install pytorch (https://pytorch.org/) according to your devices and other missing packages through pip or conda install. 
 ## Run the result
 First clone this repository by
 ```bash
@@ -21,5 +23,5 @@ For Adaptive Cruise Control example,
 cd ACC/
 bash test.sh
 ```
-##More features
+## More features
 Coming soon. 
