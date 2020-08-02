@@ -65,6 +65,12 @@ def ddpg(n_episodes=10000, max_t=200, print_every=1, save_every=100):
 
 # scores = ddpg()
 # assert False
+def where_inv(state):
+	x = state[0]
+	y = state[1]
+	inv1 = -0.191853371186-0.000536911697763*(x/3)-0.000435109277384*(y/3)+0.0182690460991*(x/3)**2+0.0247561665106*(x/3)**2*(y/3)-0.346538735833*(x/3)**3+0.0131520860539*(x/3)*(y/3)+1.53816421231*(x/3)**3*(y/3)+0.00483596382816*(y/3)**2+0.0028560139637*(x/3)*(y/3)**2+0.00414190902842*(y/3)**3+2.57054493409*(x/3)**2*(y/3)**2-0.390195854557*(x/3)**2*(y/3)**3-0.0185636017707*(x/3)**3*(y/3)**2+0.516490714902*(x/3)*(y/3)**3-7.11604377572*(x/3)**3*(y/3)**3+12.9396462908*(x/3)**4-0.121917887256*(y/3)**4-1.44310891792*(x/3)**5-0.477116884587*(x/3)**4*(y/3)-0.589388746102*(x/3)*(y/3)**4+0.216986128166*(y/3)**5-48.4278049612*(x/3)**6-7.34926485315*(x/3)**5*(y/3)-12.097946216*(x/3)**4*(y/3)**2-8.70246548175*(x/3)**2*(y/3)**4-0.798247329098*(x/3)*(y/3)**5+3.83825312635*(y/3)**6+5.30760297016*(x/3)**7+1.23827036181*(x/3)**6*(y/3)+3.05363915294*(x/3)**5*(y/3)**2-1.11810870233*(x/3)**4*(y/3)**3-4.22132859866*(x/3)**3*(y/3)**4+0.113604823788*(x/3)**2*(y/3)**5+2.96611977829*(x/3)*(y/3)**6-0.653435021444*(y/3)**7+64.8081899032*(x/3)**8+11.2567183203*(x/3)**7*(y/3)+20.4555166423*(x/3)**6*(y/3)**2+14.3628217064*(x/3)**5*(y/3)**3+27.6045432791*(x/3)**4*(y/3)**4+16.9262714487*(x/3)**3*(y/3)**5-8.4495658036*(x/3)**2*(y/3)**6-2.08341959261*(x/3)*(y/3)**7-2.33364382283*(y/3)**8-3.51997118773*(x/3)**9-0.776054346523*(x/3)**8*(y/3)-3.80690425671*(x/3)**7*(y/3)**2+2.17563895289*(x/3)**6*(y/3)**3+1.98252147664*(x/3)**5*(y/3)**4+0.232152626381*(x/3)**4*(y/3)**5+4.41563574444*(x/3)**3*(y/3)**6+0.997067584801*(x/3)**2*(y/3)**7-2.63841615246*(x/3)*(y/3)**8+0.453270940035*(y/3)**9-28.7177708963*(x/3)**10-5.55260617771*(x/3)**9*(y/3)-14.1070353745*(x/3)**8*(y/3)**2-7.50127458683*(x/3)**7*(y/3)**3-11.4211866286*(x/3)**6*(y/3)**4-19.7078126731*(x/3)**5*(y/3)**5-12.9837016603*(x/3)**4*(y/3)**6-6.84664730917*(x/3)**3*(y/3)**7+13.2110716019*(x/3)**2*(y/3)**8+2.02869323441*(x/3)*(y/3)**9-0.748164306403*(y/3)**10
+	inv2 = -0.287964114549-0.0699479731997*(x/3)-0.0131359115208*(y/3)+1.90551199836*(x/3)**2-0.438226702423*(x/3)**2*(y/3)+0.217913775564*(x/3)**3+0.355063635107*(x/3)**3*(y/3)+0.11529327211*(y/3)**2+0.37061953383*(x/3)**3*(y/3)**2-0.132170885371*(x/3)**3*(y/3)**3-0.0304111524299*(y/3)**3-4.58502468741*(x/3)**2*(y/3)**2+1.69857223625*(x/3)**2*(y/3)**3+0.0899390854696*(x/3)*(y/3)-0.192905556144*(x/3)*(y/3)**2+0.793275425178*(x/3)*(y/3)**3-6.04638297848*(x/3)**4-0.192980459015*(x/3)**5-1.37203470804*(x/3)**5*(y/3)+1.62601309598*(y/3)**4-0.431514701438*(x/3)**5*(y/3)**2-0.848370545701*(x/3)**5*(y/3)**3+0.149606452217*(y/3)**5+1.06847840813*(x/3)**4*(y/3)+13.4647119834*(x/3)**4*(y/3)**2-2.0203241137*(x/3)**4*(y/3)**3-8.90595369713*(x/3)**4*(y/3)**4-0.808958564731*(x/3)**3*(y/3)**4+0.761107798672*(x/3)**3*(y/3)**5+3.62576055234*(x/3)**2*(y/3)**4-1.32740942552*(x/3)**2*(y/3)**5+1.62920067052*(x/3)*(y/3)**4-1.43659854523*(x/3)*(y/3)**5+9.80986280992*(x/3)**6-0.85777499264*(y/3)**6+0.0473578939388*(x/3)**7-0.5583676141*(x/3)**6*(y/3)-1.77001862447*(x/3)*(y/3)**6+0.0037625898052*(y/3)**7-4.94232892363*(x/3)**8+0.955048128205*(x/3)**7*(y/3)-9.61197034361*(x/3)**6*(y/3)**2-1.10721810889*(x/3)**2*(y/3)**6+0.00525501602542*(x/3)*(y/3)**7-6.61546755522e-06*(y/3)**8
+	return np.array([int(inv1<=0), int(inv2<=-1e-1)])
 
 def model_test(agent, filename, state_list, renew, fig):
 	agent.actor_local.load_state_dict(torch.load(filename))
@@ -77,29 +83,32 @@ def model_test(agent, filename, state_list, renew, fig):
 	bp2=[]
 	if renew:
 		state_list = []
-	for ep in range(1):
+	for ep in range(500):
 		total_reward = 0
 		fuel = 0
 		if renew:
-			state = env.reset(-1.2, -1.5)
+			while True:
+				state = env.reset()
+				if where_inv(state)[0] == 1:
+					break 
 			state_list.append(state)
 		else: 
 			state = env.reset(state_list[ep][0], state_list[ep][1])
 		# print(state)
 		for t in range(201):
 			action = agent.act(state, add_noise=False)[0]
-			action_partition = BP2800partition(state)
-			action_single_d3 = BP2800single_d3(state)
-			action_single_d7 = BP2800single_d7(state)
+			# action_partition = BP2800partition(state)
+			# action_single_d3 = BP2800single_d3(state)
+			# action_single_d7 = BP2800single_d7(state)
 			fuel += 20 * abs(action)
 			next_state, reward, done = env.step(action)
 			if ep == 0:
 				dis.append(state[0])
 				velocity.append(state[1])
 				accleration.append(action*20)
-				bp0.append(action_partition*20)
-				bp1.append(action_single_d3*20)
-				bp2.append(action_single_d7*20)
+				# bp0.append(action_partition*20)
+				# bp1.append(action_single_d3*20)
+				# bp2.append(action_single_d7*20)
 				# print(t, state, next_state, action_bp*20, abs(action-action_bp), done)
 				# assert False
 			total_reward += reward
@@ -127,12 +136,12 @@ def model_test(agent, filename, state_list, renew, fig):
 	# plt.savefig(filename+'_0.05.png')
 	
 	# plt.figure(2)
-	plt.plot(accleration, label='NN')
-	plt.plot(bp0, label='partition')
-	plt.plot(bp1, label='single,d=3')
-	plt.plot(bp2, label='single,d=7')
-	plt.legend()
-	plt.savefig('comparison.png')
+	# plt.plot(accleration, label='NN')
+	# plt.plot(bp0, label='partition')
+	# plt.plot(bp1, label='single,d=3')
+	# plt.plot(bp2, label='single,d=7')
+	# plt.legend()
+	# plt.savefig('comparison.png')
 	# np.save('./plot/rl1_ori.npy', np.array(accleration))
 	# np.save('./plot/rl1_bp.npy', np.array(bp))
 	# plt.plot(dis, velocity)
@@ -219,5 +228,5 @@ def BP2900single_d3(state):
 
 s_list, f_m1 =  model_test(agent, 'actor_2800.pth', state_list=None, renew=True, fig=1)
 # _, f_m2 = model_test(agent, 'actor_2900.pth', state_list=s_list, renew=False, fig=2)
-# print(np.mean(f_m1), np.mean(f_m2), len(f_m1), len(f_m2))
+print(np.mean(f_m1), len(f_m1))
 

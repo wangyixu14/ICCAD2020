@@ -284,7 +284,7 @@ if __name__ == '__main__':
 	# train()
 	# assert False
 	sw_state = np.load('init_state_500.npy')
-	sw_reward, sw_fuel, sw_state  = test('./ddqn_models/inv/ddqn_200_1.0_good.pth', state_list=sw_state, renew=False, mode='switch')
+	sw_reward, sw_fuel, _  = test('./ddqn_models/inv/ddqn_200_1.0_good.pth', state_list=sw_state, renew=False, mode='switch')
 	print('d1')
 	d1_reward, d1_fuel, _ = test(model_name=None, state_list=sw_state, renew=False, mode='d1')
 	ran_reward, ran_fuel, _ = test(model_name=None, state_list=sw_state, renew=False, mode='random')
